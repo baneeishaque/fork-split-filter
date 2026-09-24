@@ -1,0 +1,10 @@
+[project]
+name = "fork-split-filter"
+version = "0.1.0"
+description = "Companion TUI with independent search fields for staged and unstaged git changes"
+requires-python = ">=3.12"
+dependencies = ["textual>=0.80"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

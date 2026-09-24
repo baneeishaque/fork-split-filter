@@ -1,0 +1,15 @@
+{
+  // markdownlint-cli2 wrapper: extends the shared rule set so the CLI and the
+  // VS Code extension always agree on what "lint-clean" means.
+  "config": {
+    "extends": "./.markdownlint.jsonc",
+  },
+  "globs": ["**/*.md"],
+  "ignores": [
+    "node_modules/**",
+    ".venv/**",
+    ".pytest_cache/**",
+    "content/youtube/build/**",
+    "scratch/**",
+  ],
+}

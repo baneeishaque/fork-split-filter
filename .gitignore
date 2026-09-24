@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+content/youtube/build/
+scratch/

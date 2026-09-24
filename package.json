@@ -1,0 +1,18 @@
+{
+  "name": "fork-split-filter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dev dependencies for the content pipeline: Playwright's Chromium renders the multilingual video slides, markdownlint-cli2 lints the docs.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "markdownlint": "markdownlint-cli2 \"**/*.md\"",
+    "markdownlint:fix": "markdownlint-cli2 --fix \"**/*.md\""
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "markdownlint-cli2": "0.23.3"
+  }
+}
