@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Một bộ lọc là chưa đủ",
+    "narration": "Mọi ứng dụng git đều có một ô tìm kiếm dùng chung cho danh sách đã chuẩn bị và chưa chuẩn bị. Bạn lọc, bạn chuẩn bị, bạn chuyển khung, rồi gõ lại đúng truy vấn đó. Nên tôi đã tạo ra mảnh ghép còn thiếu."
+  },
+  "design": {
+    "title": "Hai khung, hai bộ lọc",
+    "narration": "Đã chuẩn bị và chưa chuẩn bị nằm cạnh nhau, mỗi khung có ô tìm kiếm riêng. Hai danh sách trả lời hai câu hỏi khác nhau, và giờ chúng giữ hai câu trả lời khác nhau. Gõ vào khung này thì khung kia không bị đụng tới."
+  },
+  "architecture": {
+    "title": "Một lần làm mới, một đường ống",
+    "narration": "Thiết kế là một chiều. Đầu ra máy của git nuôi bộ phân tích; bộ phân tích nuôi ảnh chụp có kiểu; một bộ lọc thuần cho mỗi khung nuôi giao diện terminal. Không có gì nhập ngược lại, nên từng mô-đun có thể được kiểm thử riêng."
+  },
+  "parsing": {
+    "title": "Phân tích định dạng, không phải văn bản",
+    "narration": "Công cụ đọc git status porcelain phiên bản hai, phân tách bằng NUL. Đổi tên mang theo đường dẫn gốc, xung đột có bản ghi riêng, tệp chưa được theo dõi hiện rõ, và tên tệp có dấu cách hay xuống dòng không thể phá vỡ cấu trúc phân tách."
+  },
+  "filtering": {
+    "title": "Bộ lọc là một hàm thuần",
+    "narration": "Lọc là một hàm: đầu vào là các mục và một truy vấn, đầu ra là các mục khớp. Không widget, không gọi git. Cả hai khung gọi cùng một đoạn mã, nên chúng không thể lệch nhau, và bộ lọc kiểm thử được mà không cần terminal."
+  },
+  "refresh": {
+    "title": "Làm mới không tranh chấp",
+    "narration": "Việc làm mới kích hoạt theo hẹn giờ, mỗi lần gõ phím và theo yêu cầu, nên chúng có thể chồng lên nhau. Một khóa khiến mỗi lần làm mới là nguyên tử: một ảnh chụp duy nhất nạp lại cả hai khung, và lựa chọn vẫn được giữ nguyên. Tranh chấp là thật; cách sửa chỉ một dòng."
+  },
+  "actions": {
+    "title": "Thao tác ưu tiên bàn phím",
+    "narration": "Chuẩn bị và hủy chuẩn bị từ khung bạn đang xem, mở tệp trong trình soạn thảo, hiện nó trong Finder, sao chép đường dẫn tuyệt đối, hoặc buộc làm mới. Bàn phím không bao giờ phải rời danh sách để hoàn thành công việc."
+  },
+  "integration": {
+    "title": "Sống bên trong ứng dụng git",
+    "narration": "Fork không có API plugin, nên tích hợp là một lệnh tùy chỉnh: menu ngữ cảnh của kho chạy ứng dụng trong terminal, đã gắn với kho đang chọn. Không sửa đổi gì trong chính Fork."
+  },
+  "testing": {
+    "title": "Mười hai bài kiểm thử chứng minh",
+    "narration": "Sáu bài kiểm thử bao quát việc phân tích và các kho thật, gồm cả đổi tên và xung đột hợp nhất. Bốn bài kiểm thử bộ lọc thuần. Hai bài điều khiển cây widget thật. Mười hai bài kiểm thử, và bản thân git không bao giờ bị giả lập."
+  },
+  "tradeoffs": {
+    "title": "Những đánh đổi, thành thật",
+    "narration": "Mọi lựa chọn đều có giá. Một ứng dụng độc lập phát hành hôm nay nhưng sống bên cạnh Fork. Gọi git giữ git là nguồn chuẩn nhưng tạo thêm tiến trình. Thăm dò thì đơn giản nhưng trễ hai giây. Và bộ lọc chuỗi con thì đoán được nhưng không mờ. Tài liệu ghi lại từng quyết định và phương án thay thế."
+  },
+  "results": {
+    "title": "Tổng lại được gì",
+    "narration": "Kết quả: hai bộ lọc độc lập, ba trăm tám mươi ba dòng mã ứng dụng, mười hai bài kiểm thử xanh, và không thay đổi gì trong Fork. Video này cũng thực hành điều mình giảng — ba mươi bảy ngôn ngữ phụ đề và hai mươi bản lồng tiếng, do chính kho này tạo ra."
+  },
+  "outro": {
+    "title": "Hãy lấy mẫu thiết kế",
+    "narration": "Mã nguồn, ghi chú kiến trúc và nhật ký đánh đổi đều công khai, theo giấy phép MIT. Liên kết ở phần mô tả."
+  }
+}

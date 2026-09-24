@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Un seul filtre ne suffit pas",
+    "narration": "Chaque client git a une seule boîte de recherche partagée par les listes des modifications indexées et non indexées. Vous filtrez, vous indexez, vous changez de volet et vous retapez la même requête. J'ai donc construit la pièce manquante."
+  },
+  "design": {
+    "title": "Deux volets, deux filtres",
+    "narration": "Les modifications indexées et non indexées côte à côte, chaque volet avec son propre champ de recherche. Les deux listes répondent à deux questions différentes, et gardent désormais deux réponses différentes. Tapez dans un volet et l'autre reste intact."
+  },
+  "architecture": {
+    "title": "Un rafraîchissement, un pipeline",
+    "narration": "La conception est unidirectionnelle. La sortie machine de git alimente un analyseur ; l'analyseur alimente un instantané typé ; un filtre pur par volet alimente l'interface terminal. Rien n'est importé en sens inverse, chaque module peut donc être testé seul."
+  },
+  "parsing": {
+    "title": "Analyser le format, pas le texte",
+    "narration": "L'outil lit git status porcelain version deux, délimité par NUL. Les renommages portent leur chemin d'origine, les conflits ont leur propre enregistrement, les fichiers non suivis sont explicites, et un nom avec un espace ou un saut de ligne ne peut pas casser la structure."
+  },
+  "filtering": {
+    "title": "Un filtre est une fonction pure",
+    "narration": "Le filtrage est une seule fonction : des entrées et une requête entrent, les entrées correspondantes sortent. Pas de widgets, pas d'appels à git. Les deux volets appellent le même code, ils ne peuvent donc pas diverger, et le filtre se teste sans terminal."
+  },
+  "refresh": {
+    "title": "Rafraîchir sans course",
+    "narration": "Les rafraîchissements se déclenchent sur minuterie, à chaque frappe et à la demande, ils peuvent donc se chevaucher. Un verrou rend chaque rafraîchissement atomique : un seul instantané repeuple les deux volets, et la sélection survit. La course était réelle ; le correctif tenait en une ligne."
+  },
+  "actions": {
+    "title": "La priorité au clavier",
+    "narration": "Indexez et désindexez depuis le volet que vous regardez, ouvrez le fichier dans votre éditeur, révélez-le dans Finder, copiez son chemin absolu ou forcez un rafraîchissement. Le clavier n'a jamais besoin de quitter les listes pour travailler."
+  },
+  "integration": {
+    "title": "Vit à l'intérieur du client",
+    "narration": "Fork n'a pas d'API de plugins, l'intégration est donc une commande personnalisée : le menu contextuel du dépôt lance l'application dans un terminal, déjà liée au dépôt sélectionné. Zéro modification à Fork lui-même."
+  },
+  "testing": {
+    "title": "Douze tests le prouvent",
+    "narration": "Six tests couvrent l'analyse et de vrais dépôts, y compris les renommages et les conflits de fusion. Quatre testent le filtre pur. Deux pilotent le véritable arbre de widgets. Douze tests, et git lui-même n'est jamais simulé."
+  },
+  "tradeoffs": {
+    "title": "Les compromis, honnêtement",
+    "narration": "Chaque choix a un coût. Une application autonome sort aujourd'hui mais vit à côté de Fork. Appeler git garde git comme autorité mais lance un processus. L'interrogation périodique est simple mais a deux secondes de retard. Et un filtre par sous-chaîne est prévisible mais pas flou. La documentation consigne chaque décision et son alternative."
+  },
+  "results": {
+    "title": "Ce que tout cela donne",
+    "narration": "Le résultat : deux filtres indépendants, trois cent quatre-vingt-trois lignes de code applicatif, douze tests au vert et zéro changement dans Fork. Cette vidéo applique aussi ses propres principes : trente-sept langues de sous-titres et vingt pistes de narration, produites par le même dépôt."
+  },
+  "outro": {
+    "title": "Volez le modèle",
+    "narration": "Le code, les notes d'architecture et le journal des compromis sont tous publics, sous licence MIT. Lien dans la description."
+  }
+}

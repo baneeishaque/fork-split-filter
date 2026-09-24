@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Tek filtre yetmez",
+    "narration": "Her git istemcisinde hazırlanmış ve hazırlanmamış listelerin paylaştığı tek bir arama kutusu var. Filtreliyorsun, hazırlıyorsun, panelleri değiştiriyorsun ve aynı sorguyu tekrar yazıyorsun. Ben de eksik parçayı yaptım."
+  },
+  "design": {
+    "title": "İki panel, iki filtre",
+    "narration": "Hazırlanmış ve hazırlanmamış yan yana, her panelin kendi arama alanı var. İki liste iki farklı soruya cevap veriyor ve artık iki farklı cevap tutuyorlar. Bir panele yaz, diğeri dokunulmamış kalır."
+  },
+  "architecture": {
+    "title": "Tek yenileme, tek akış hattı",
+    "narration": "Tasarım tek yönlü. Git'in makine çıktısı bir ayrıştırıcıyı besliyor; ayrıştırıcı tipli bir anlık görüntüyü besliyor; panel başına bir saf filtre terminal arayüzünü besliyor. Hiçbir şey geriye doğru içe aktarılmıyor, böylece her modül tek başına test edilebiliyor."
+  },
+  "parsing": {
+    "title": "Metni değil, biçimi ayrıştır",
+    "narration": "Araç, git status porcelain sürüm ikiyi NUL ile ayrılmış olarak okur. Yeniden adlandırmalar özgün yollarını taşır, çakışmaların kendi kaydı vardır, izlenmeyen dosyalar açıktır ve boşluk veya satır sonu içeren bir dosya adı çerçeveyi bozamaz."
+  },
+  "filtering": {
+    "title": "Filtre saf bir fonksiyondur",
+    "narration": "Filtreleme tek bir fonksiyondur: girdiler ve bir sorgu girer, eşleşen girdiler çıkar. Widget yok, git çağrısı yok. İki panel de aynı kodu çağırır, bu yüzden ayrışamazlar ve filtre terminal olmadan test edilebilir."
+  },
+  "refresh": {
+    "title": "Yarış durumu olmadan yenileme",
+    "narration": "Yenilemeler bir zamanlayıcıyla, her tuş vuruşunda ve istek üzerine tetiklenir, bu yüzden üst üste gelebilirler. Tek bir kilit her yenilemeyi atomik yapar: tek bir anlık görüntü iki paneli de doldurur ve seçim korunur. Yarış gerçekti; çözüm tek satırdı."
+  },
+  "actions": {
+    "title": "Klavye öncelikli işlemler",
+    "narration": "Baktığın panelden hazırla ve hazırlığı kaldır, dosyayı düzenleyicinde aç, Finder'da göster, mutlak yolunu kopyala veya yenilemeyi zorla. Klavyenin işi bitirmek için listelerden ayrılmasına hiç gerek yok."
+  },
+  "integration": {
+    "title": "İstemcinin içinde yaşar",
+    "narration": "Fork'un eklenti API'si yok, bu yüzden entegrasyon özel bir komut: depo bağlam menüsü uygulamayı seçili depoya bağlı olarak bir terminalde başlatıyor. Fork'un kendisinde sıfır değişiklik."
+  },
+  "testing": {
+    "title": "On iki test kanıtlıyor",
+    "narration": "Altı test ayrıştırmayı ve gerçek depoları kapsıyor, yeniden adlandırmalar ve birleştirme çakışmaları dahil. Dördü saf filtreyi test ediyor. İkisi gerçek widget ağacını sürüyor. On iki test ve git'in kendisi hiç taklit edilmiyor."
+  },
+  "tradeoffs": {
+    "title": "Ödünleşimler, dürüstçe",
+    "narration": "Her seçimin bir bedeli var. Bağımsız bir uygulama bugün yayınlanıyor ama Fork'un yanında yaşıyor. Git'i çağırmak git'i otorite tutuyor ama bir süreç doğuruyor. Yoklama basit ama iki saniye eski. Ve alt dize filtresi öngörülebilir ama bulanık değil. Belgeler her kararı ve alternatifini kaydediyor."
+  },
+  "results": {
+    "title": "Toplamda ne elde ediyoruz",
+    "narration": "Sonuç: iki bağımsız filtre, üç yüz seksen üç satır uygulama kodu, on iki test yeşil ve Fork'ta sıfır değişiklik. Bu video da söylediğini uyguluyor — otuz yedi altyazı dili ve yirmi anlatım kaydı, aynı depo tarafından üretildi."
+  },
+  "outro": {
+    "title": "Kalıbı çal",
+    "narration": "Kod, mimari notları ve ödünleşim günlüğü tamamen açık, MIT lisansı altında. Bağlantı açıklamada."
+  }
+}

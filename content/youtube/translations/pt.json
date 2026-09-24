@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Um filtro não basta",
+    "narration": "Todo cliente git tem uma única caixa de busca compartilhada pelas listas de arquivos preparados e não preparados. Você filtra, prepara, troca de painel e digita a mesma consulta de novo. Então construí a peça que faltava."
+  },
+  "design": {
+    "title": "Dois painéis, dois filtros",
+    "narration": "Preparados e não preparados lado a lado, cada painel com seu próprio campo de busca. As duas listas respondem a perguntas diferentes e agora mantêm respostas diferentes. Digite em um painel e o outro permanece intacto."
+  },
+  "architecture": {
+    "title": "Uma atualização, um pipeline",
+    "narration": "O design é unidirecional. A saída de máquina do git alimenta um parser; o parser alimenta um snapshot tipado; um filtro puro por painel alimenta a interface de terminal. Nada importa no sentido inverso, então cada módulo pode ser testado sozinho."
+  },
+  "parsing": {
+    "title": "Analise o formato, não o texto",
+    "narration": "A ferramenta lê git status porcelain versão dois, delimitado por NUL. Renomeações carregam o caminho original, conflitos têm seu próprio registro, arquivos não rastreados são explícitos, e um nome de arquivo com espaço ou quebra de linha não pode quebrar a estrutura das entradas."
+  },
+  "filtering": {
+    "title": "Um filtro é uma função pura",
+    "narration": "Filtrar é uma função só: entradas e uma consulta entram, entradas correspondentes saem. Sem widgets, sem chamadas ao git. Os dois painéis chamam o mesmo código, então não podem divergir, e o filtro é testável sem um terminal."
+  },
+  "refresh": {
+    "title": "Atualize sem condição de corrida",
+    "narration": "As atualizações são disparadas por um temporizador, a cada tecla digitada e sob demanda, então podem se sobrepor. Um bloqueio torna cada atualização atômica: um único snapshot repovoa os dois painéis, e a seleção sobrevive. A condição de corrida era real; a correção foi uma linha."
+  },
+  "actions": {
+    "title": "Operações com foco no teclado",
+    "narration": "Prepare e desfaça a preparação a partir do painel que você está vendo, abra o arquivo no seu editor, mostre-o no Finder, copie seu caminho absoluto ou force uma atualização. O teclado nunca precisa sair das listas para fazer o trabalho."
+  },
+  "integration": {
+    "title": "Vive dentro do cliente",
+    "narration": "O Fork não tem API de plugins, então a integração é um comando personalizado: o menu de contexto do repositório inicia o app em um terminal, já vinculado ao repositório selecionado. Zero modificações no próprio Fork."
+  },
+  "testing": {
+    "title": "Doze testes provam",
+    "narration": "Seis testes cobrem o parsing e repositórios reais, incluindo renomeações e conflitos de merge. Quatro testam o filtro puro. Dois dirigem a árvore real de widgets. Doze testes, e o próprio git nunca é simulado."
+  },
+  "tradeoffs": {
+    "title": "Os trade-offs, com honestidade",
+    "narration": "Toda escolha custa algo. Um app independente é entregue hoje, mas vive ao lado do Fork. Chamar o git mantém o git como autoridade, mas gera um processo. O polling é simples, mas fica dois segundos desatualizado. E um filtro por substring é previsível, mas não difuso. A documentação registra cada decisão e sua alternativa."
+  },
+  "results": {
+    "title": "No que isso resulta",
+    "narration": "O resultado: dois filtros independentes, trezentas e oitenta e três linhas de código de aplicação, doze testes verdes e zero mudanças no Fork. Este vídeo também pratica o que prega — trinta e sete idiomas de legendas e vinte faixas de narração, produzidos pelo mesmo repositório."
+  },
+  "outro": {
+    "title": "Roube o padrão",
+    "narration": "O código, as notas de arquitetura e o registro de trade-offs são todos públicos, sob a licença MIT. Link na descrição."
+  }
+}
