@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:12,581
+Todo cliente de git tiene una única caja de búsqueda que comparten las listas de cambios preparados y no preparados. Filtras, preparas, cambias de panel y escribes la misma consulta otra vez. Así que construí la pieza que faltaba.
+
+2
+00:00:14,381 --> 00:00:27,078
+Los cambios preparados y los no preparados, lado a lado, cada panel con su propio campo de búsqueda. Las dos listas responden a dos preguntas distintas, y ahora mantienen dos respuestas distintas. Escribe en un panel y el otro queda intacto.
+
+3
+00:00:28,877 --> 00:00:43,069
+El diseño es unidireccional. La salida de máquina de git alimenta un analizador; el analizador alimenta una instantánea tipada; un filtro puro por panel alimenta la interfaz de terminal. Nada se importa hacia atrás, así que cada módulo se puede probar por separado.
+
+4
+00:00:44,869 --> 00:00:59,558
+La herramienta lee git status porcelain versión dos, delimitado por NUL. Los cambios de nombre llevan su ruta original, los conflictos tienen su propio registro, los archivos sin seguimiento son explícitos, y un nombre con espacio o salto de línea no puede romper la estructura.
+
+5
+00:01:01,358 --> 00:01:14,869
+Filtrar es una sola función: entran entradas y una consulta, salen las entradas coincidentes. Sin widgets, sin llamadas a git. Ambos paneles llaman al mismo código, así que no pueden divergir, y el filtro se puede probar sin terminal.
+
+6
+00:01:16,669 --> 00:01:31,544
+Las actualizaciones se disparan con un temporizador, con cada tecla y a demanda, así que pueden solaparse. Un bloqueo hace atómica cada actualización: una sola instantánea repuebla ambos paneles, y la selección sobrevive. La carrera era real; la solución fue una línea.
+
+7
+00:01:33,344 --> 00:01:45,387
+Prepara y quita de preparación desde el panel que estás mirando, abre el archivo en tu editor, muéstralo en Finder, copia su ruta absoluta o fuerza una actualización. El teclado nunca tiene que salir de las listas para hacer el trabajo.
+
+8
+00:01:47,187 --> 00:01:59,328
+Fork no tiene API de plugins, así que la integración es un comando personalizado: el menú contextual del repositorio lanza la app en una terminal, ya vinculada al repositorio seleccionado. Cero modificaciones a Fork.
+
+9
+00:02:01,128 --> 00:02:13,136
+Seis pruebas cubren el análisis y repositorios reales, incluidos cambios de nombre y conflictos de fusión. Cuatro prueban el filtro puro. Dos manejan el árbol real de widgets. Doce pruebas, y git nunca se simula.
+
+10
+00:02:14,936 --> 00:02:31,620
+Cada elección cuesta algo. Una app independiente se lanza hoy pero vive junto a Fork. Invocar git mantiene a git como autoridad pero crea un proceso. El sondeo es simple pero tiene dos segundos de retraso. Y un filtro por subcadena es predecible pero no difuso. La documentación registra cada decisión y su alternativa.
+
+11
+00:02:33,420 --> 00:02:49,364
+El resultado: dos filtros independientes, trescientas ochenta y tres líneas de código de aplicación, doce pruebas en verde y cero cambios en Fork. Este vídeo también predica con el ejemplo: treinta y siete idiomas de subtítulos y veinte pistas de narración, producidos por el mismo repositorio.
+
+12
+00:02:51,164 --> 00:02:58,858
+El código, las notas de arquitectura y el registro de compromisos son todos públicos, bajo la licencia MIT. Enlace en la descripción.

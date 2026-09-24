@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:16,127
+Her git istemcisinde hazırlanmış ve hazırlanmamış listelerin paylaştığı tek bir arama kutusu var. Filtreliyorsun, hazırlıyorsun, panelleri değiştiriyorsun ve aynı sorguyu tekrar yazıyorsun. Ben de eksik parçayı yaptım.
+
+2
+00:00:17,927 --> 00:00:31,914
+Hazırlanmış ve hazırlanmamış yan yana, her panelin kendi arama alanı var. İki liste iki farklı soruya cevap veriyor ve artık iki farklı cevap tutuyorlar. Bir panele yaz, diğeri dokunulmamış kalır.
+
+3
+00:00:33,714 --> 00:00:52,565
+Tasarım tek yönlü. Git'in makine çıktısı bir ayrıştırıcıyı besliyor; ayrıştırıcı tipli bir anlık görüntüyü besliyor; panel başına bir saf filtre terminal arayüzünü besliyor. Hiçbir şey geriye doğru içe aktarılmıyor, böylece her modül tek başına test edilebiliyor.
+
+4
+00:00:54,365 --> 00:01:12,312
+Araç, git status porcelain sürüm ikiyi NUL ile ayrılmış olarak okur. Yeniden adlandırmalar özgün yollarını taşır, çakışmaların kendi kaydı vardır, izlenmeyen dosyalar açıktır ve boşluk veya satır sonu içeren bir dosya adı çerçeveyi bozamaz.
+
+5
+00:01:14,112 --> 00:01:30,194
+Filtreleme tek bir fonksiyondur: girdiler ve bir sorgu girer, eşleşen girdiler çıkar. Widget yok, git çağrısı yok. İki panel de aynı kodu çağırır, bu yüzden ayrışamazlar ve filtre terminal olmadan test edilebilir.
+
+6
+00:01:31,994 --> 00:01:50,050
+Yenilemeler bir zamanlayıcıyla, her tuş vuruşunda ve istek üzerine tetiklenir, bu yüzden üst üste gelebilirler. Tek bir kilit her yenilemeyi atomik yapar: tek bir anlık görüntü iki paneli de doldurur ve seçim korunur. Yarış gerçekti; çözüm tek satırdı.
+
+7
+00:01:51,850 --> 00:02:06,508
+Baktığın panelden hazırla ve hazırlığı kaldır, dosyayı düzenleyicinde aç, Finder'da göster, mutlak yolunu kopyala veya yenilemeyi zorla. Klavyenin işi bitirmek için listelerden ayrılmasına hiç gerek yok.
+
+8
+00:02:08,308 --> 00:02:22,208
+Fork'un eklenti API'si yok, bu yüzden entegrasyon özel bir komut: depo bağlam menüsü uygulamayı seçili depoya bağlı olarak bir terminalde başlatıyor. Fork'un kendisinde sıfır değişiklik.
+
+9
+00:02:24,008 --> 00:02:40,945
+Altı test ayrıştırmayı ve gerçek depoları kapsıyor, yeniden adlandırmalar ve birleştirme çakışmaları dahil. Dördü saf filtreyi test ediyor. İkisi gerçek widget ağacını sürüyor. On iki test ve git'in kendisi hiç taklit edilmiyor.
+
+10
+00:02:42,745 --> 00:03:03,586
+Her seçimin bir bedeli var. Bağımsız bir uygulama bugün yayınlanıyor ama Fork'un yanında yaşıyor. Git'i çağırmak git'i otorite tutuyor ama bir süreç doğuruyor. Yoklama basit ama iki saniye eski. Ve alt dize filtresi öngörülebilir ama bulanık değil. Belgeler her kararı ve alternatifini kaydediyor.
+
+11
+00:03:05,386 --> 00:03:21,670
+Sonuç: iki bağımsız filtre, üç yüz seksen üç satır uygulama kodu, on iki test yeşil ve Fork'ta sıfır değişiklik. Bu video da söylediğini uyguluyor — otuz yedi altyazı dili ve yirmi anlatım kaydı, aynı depo tarafından üretildi.
+
+12
+00:03:23,470 --> 00:03:31,035
+Kod, mimari notları ve ödünleşim günlüğü tamamen açık, MIT lisansı altında. Bağlantı açıklamada.

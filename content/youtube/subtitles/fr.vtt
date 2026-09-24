@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:14.247
+Chaque client git a une seule boîte de recherche partagée par les listes des modifications indexées et non indexées. Vous filtrez, vous indexez, vous changez de volet et vous retapez la même requête. J'ai donc construit la pièce manquante.
+
+00:00:16.047 --> 00:00:30.518
+Les modifications indexées et non indexées côte à côte, chaque volet avec son propre champ de recherche. Les deux listes répondent à deux questions différentes, et gardent désormais deux réponses différentes. Tapez dans un volet et l'autre reste intact.
+
+00:00:32.318 --> 00:00:48.509
+La conception est unidirectionnelle. La sortie machine de git alimente un analyseur ; l'analyseur alimente un instantané typé ; un filtre pur par volet alimente l'interface terminal. Rien n'est importé en sens inverse, chaque module peut donc être testé seul.
+
+00:00:50.309 --> 00:01:06.720
+L'outil lit git status porcelain version deux, délimité par NUL. Les renommages portent leur chemin d'origine, les conflits ont leur propre enregistrement, les fichiers non suivis sont explicites, et un nom avec un espace ou un saut de ligne ne peut pas casser la structure.
+
+00:01:08.520 --> 00:01:23.178
+Le filtrage est une seule fonction : des entrées et une requête entrent, les entrées correspondantes sortent. Pas de widgets, pas d'appels à git. Les deux volets appellent le même code, ils ne peuvent donc pas diverger, et le filtre se teste sans terminal.
+
+00:01:24.978 --> 00:01:41.575
+Les rafraîchissements se déclenchent sur minuterie, à chaque frappe et à la demande, ils peuvent donc se chevaucher. Un verrou rend chaque rafraîchissement atomique : un seul instantané repeuple les deux volets, et la sélection survit. La course était réelle ; le correctif tenait en une ligne.
+
+00:01:43.375 --> 00:01:57.433
+Indexez et désindexez depuis le volet que vous regardez, ouvrez le fichier dans votre éditeur, révélez-le dans Finder, copiez son chemin absolu ou forcez un rafraîchissement. Le clavier n'a jamais besoin de quitter les listes pour travailler.
+
+00:01:59.233 --> 00:02:12.834
+Fork n'a pas d'API de plugins, l'intégration est donc une commande personnalisée : le menu contextuel du dépôt lance l'application dans un terminal, déjà liée au dépôt sélectionné. Zéro modification à Fork lui-même.
+
+00:02:14.634 --> 00:02:27.599
+Six tests couvrent l'analyse et de vrais dépôts, y compris les renommages et les conflits de fusion. Quatre testent le filtre pur. Deux pilotent le véritable arbre de widgets. Douze tests, et git lui-même n'est jamais simulé.
+
+00:02:29.399 --> 00:02:49.176
+Chaque choix a un coût. Une application autonome sort aujourd'hui mais vit à côté de Fork. Appeler git garde git comme autorité mais lance un processus. L'interrogation périodique est simple mais a deux secondes de retard. Et un filtre par sous-chaîne est prévisible mais pas flou. La documentation consigne chaque décision et son alternative.
+
+00:02:50.976 --> 00:03:07.769
+Le résultat : deux filtres indépendants, trois cent quatre-vingt-trois lignes de code applicatif, douze tests au vert et zéro changement dans Fork. Cette vidéo applique aussi ses propres principes : trente-sept langues de sous-titres et vingt pistes de narration, produites par le même dépôt.
+
+00:03:09.569 --> 00:03:17.067
+Le code, les notes d'architecture et le journal des compromis sont tous publics, sous licence MIT. Lien dans la description.

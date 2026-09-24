@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:12.995
+Ogni client git ha una sola casella di ricerca condivisa dagli elenchi dei file in stage e non in stage. Filtri, metti in stage, cambi pannello e digiti di nuovo la stessa query. Così ho costruito il pezzo mancante.
+
+00:00:14.795 --> 00:00:27.667
+In stage e non in stage fianco a fianco, ogni pannello con il proprio campo di ricerca. I due elenchi rispondono a due domande diverse, e ora mantengono due risposte diverse. Digita in un pannello e l'altro resta intatto.
+
+00:00:29.467 --> 00:00:44.360
+Il design è unidirezionale. L'output macchina di git alimenta un parser; il parser alimenta uno snapshot tipizzato; un filtro puro per pannello alimenta l'interfaccia terminale. Niente import all'indietro, così ogni modulo può essere testato da solo.
+
+00:00:46.160 --> 00:01:00.669
+Lo strumento legge git status porcelain versione due, delimitato da NUL. Le rinomine portano il percorso originale, i conflitti hanno il proprio record, i file non tracciati sono espliciti, e un nome con spazio o newline non può rompere la struttura.
+
+00:01:02.469 --> 00:01:17.489
+Il filtraggio è una sola funzione: entrano voci e query, escono le voci corrispondenti. Niente widget, niente chiamate a git. Entrambi i pannelli usano lo stesso codice, quindi non possono divergere, e il filtro si testa senza terminale.
+
+00:01:19.289 --> 00:01:35.199
+Gli aggiornamenti partono a intervalli, a ogni tasto e su richiesta, quindi possono sovrapporsi. Un lock rende atomico ogni aggiornamento: un singolo snapshot ripopola entrambi i pannelli, e la selezione sopravvive. La race era reale; la correzione è stata una riga.
+
+00:01:36.999 --> 00:01:49.942
+Metti in stage e rimuovi dallo stage dal pannello che stai guardando, apri il file nel tuo editor, rivelalo nel Finder, copia il suo percorso assoluto o forza un aggiornamento. La tastiera non deve mai lasciare gli elenchi per lavorare.
+
+00:01:51.742 --> 00:02:04.118
+Fork non ha un'API per plugin, quindi l'integrazione è un comando personalizzato: il menu contestuale del repository avvia l'app in un terminale, già legata al repository selezionato. Zero modifiche a Fork stesso.
+
+00:02:05.918 --> 00:02:18.313
+Sei test coprono il parsing e repository reali, incluse rinomine e conflitti di merge. Quattro testano il filtro puro. Due guidano il vero albero di widget. Dodici test, e git stesso non è mai mockato.
+
+00:02:20.113 --> 00:02:37.592
+Ogni scelta ha un costo. Un'app autonoma esce oggi ma vive accanto a Fork. Invocare git mantiene git autorevole ma avvia un processo. Il polling è semplice ma vecchio di due secondi. E un filtro per sottostringa è prevedibile ma non fuzzy. La documentazione registra ogni decisione e la sua alternativa.
+
+00:02:39.392 --> 00:02:55.481
+Il risultato: due filtri indipendenti, trecentottantatré righe di codice applicativo, dodici test verdi e zero modifiche a Fork. Questo video pratica ciò che predica: trentasette lingue di sottotitoli e venti tracce di narrazione, prodotte dallo stesso repository.
+
+00:02:57.281 --> 00:03:05.347
+Il codice, le note di architettura e il registro dei compromessi sono tutti pubblici, sotto licenza MIT. Link nella descrizione.

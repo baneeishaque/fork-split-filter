@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:17,531
+Setiap klien git punya satu kotak pencarian yang dipakai bersama oleh daftar perubahan yang sudah di-stage dan yang belum. Anda memfilter, men-stage, berpindah panel, lalu mengetik kueri yang sama lagi. Jadi saya membuat bagian yang hilang.
+
+2
+00:00:19,331 --> 00:00:36,659
+Perubahan yang sudah di-stage dan yang belum ditampilkan berdampingan, tiap panel punya kolom pencarian sendiri. Kedua daftar menjawab dua pertanyaan berbeda, dan kini menyimpan dua jawaban berbeda. Ketik di satu panel, panel lain tak tersentuh.
+
+3
+00:00:38,459 --> 00:00:55,883
+Desainnya searah. Keluaran mesin git memberi masukan ke parser; parser memberi masukan ke snapshot bertipe; satu filter murni per panel memberi masukan ke antarmuka terminal. Tidak ada impor ke belakang, jadi tiap modul bisa diuji sendiri.
+
+4
+00:00:57,683 --> 00:01:16,382
+Alat ini membaca git status porcelain versi dua, dibatasi NUL. Penggantian nama membawa jalur asalnya, konflik punya catatannya sendiri, file tak terlacak bersifat eksplisit, dan nama file dengan spasi atau baris baru tidak bisa merusak struktur.
+
+5
+00:01:18,182 --> 00:01:34,255
+Pemfilteran adalah satu fungsi: entri dan kueri masuk, entri yang cocok keluar. Tanpa widget, tanpa panggilan git. Kedua panel memakai kode yang sama, jadi tak bisa menyimpang, dan filternya bisa diuji tanpa terminal.
+
+6
+00:01:36,055 --> 00:01:56,933
+Penyegaran dipicu oleh pengatur waktu, setiap ketukan tombol, dan saat diminta, jadi bisa saling tumpang tindih. Satu kunci membuat tiap penyegaran atomik: satu snapshot mengisi ulang kedua panel, dan pilihannya tetap bertahan. Kondisi balapannya nyata; perbaikannya satu baris.
+
+7
+00:01:58,733 --> 00:02:14,495
+Stage dan unstage dari panel yang sedang Anda lihat, buka file di editor, tampilkan di Finder, salin jalur absolutnya, atau paksa penyegaran. Keyboard tak pernah harus meninggalkan daftar untuk menyelesaikan pekerjaan.
+
+8
+00:02:16,295 --> 00:02:31,875
+Fork tidak punya API plugin, jadi integrasinya berupa perintah khusus: menu konteks repositori meluncurkan aplikasi di terminal, sudah terikat ke repositori yang dipilih. Nol modifikasi pada Fork itu sendiri.
+
+9
+00:02:33,675 --> 00:02:48,972
+Enam tes mencakup parsing dan repositori nyata, termasuk penggantian nama dan konflik merge. Empat menguji filter murni. Dua menjalankan pohon widget sungguhan. Dua belas tes, dan git sendiri tidak pernah di-mock.
+
+10
+00:02:50,772 --> 00:03:14,704
+Setiap pilihan ada harganya. Aplikasi mandiri rilis hari ini tetapi hidup di samping Fork. Memanggil git menjaga git tetap otoritatif tetapi memunculkan proses. Polling itu sederhana tetapi tertinggal dua detik. Dan filter substring dapat diprediksi tetapi tidak fuzzy. Dokumentasi mencatat tiap keputusan dan alternatifnya.
+
+11
+00:03:16,504 --> 00:03:37,781
+Hasilnya: dua filter independen, tiga ratus delapan puluh tiga baris kode aplikasi, dua belas tes hijau, dan nol perubahan pada Fork. Video ini juga mempraktikkan apa yang diajarkan: tiga puluh tujuh bahasa subtitle dan dua puluh trek narasi, diproduksi oleh repositori yang sama.
+
+12
+00:03:39,581 --> 00:03:48,007
+Kodenya, catatan arsitektur, dan log kompromi semuanya publik, di bawah lisensi MIT. Tautan ada di deskripsi.

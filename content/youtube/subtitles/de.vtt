@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:16.258
+Jeder git-Client hat ein einziges Suchfeld, das sich die Liste der bereitgestellten und der nicht bereitgestellten Änderungen teilt. Man filtert, stellt bereit, wechselt den Bereich und tippt dieselbe Suche erneut ein. Also habe ich das fehlende Stück gebaut.
+
+00:00:18.058 --> 00:00:33.571
+Bereitgestellt und nicht bereitgestellt nebeneinander, jeder Bereich mit eigenem Suchfeld. Die beiden Listen beantworten zwei verschiedene Fragen, und jetzt behalten sie zwei verschiedene Antworten. Tippt man in einen Bereich, bleibt der andere unberührt.
+
+00:00:35.371 --> 00:00:51.285
+Das Design ist einbahnig. Gits Maschinenausgabe speist einen Parser; der Parser speist einen typisierten Snapshot; ein reiner Filter pro Bereich speist die Terminal-UI. Nichts importiert rückwärts, sodass jedes Modul allein getestet werden kann.
+
+00:00:53.085 --> 00:01:11.122
+Das Werkzeug liest git status porcelain Version zwei, NUL-getrennt. Umbenennungen tragen ihren ursprünglichen Pfad, Konflikte haben ihren eigenen Datensatz, unverfolgte Dateien sind explizit, und ein Dateiname mit Leerzeichen oder Zeilenumbruch kann das Rahmenwerk nicht brechen.
+
+00:01:12.922 --> 00:01:30.382
+Filtern ist eine Funktion: Einträge und eine Suchanfrage gehen hinein, passende Einträge kommen heraus. Keine Widgets, keine git-Aufrufe. Beide Bereiche rufen denselben Code auf, sodass sie nicht auseinanderdriften können, und der Filter ist ohne Terminal testbar.
+
+00:01:32.182 --> 00:01:48.852
+Refreshes laufen per Timer, bei jedem Tastendruck und auf Anfrage, sodass sie sich überlappen können. Ein Lock macht jeden Refresh atomar: ein einziger Snapshot füllt beide Bereiche neu, und die Auswahl überlebt. Der Wettlauf war real; die Lösung war eine Zeile.
+
+00:01:50.652 --> 00:02:06.867
+Bereitstellen und Zurücknehmen direkt aus dem Bereich, den man gerade ansieht, die Datei im Editor öffnen, sie im Finder zeigen, ihren absoluten Pfad kopieren oder einen Refresh erzwingen. Die Tastatur muss die Listen nie verlassen, um Arbeit zu erledigen.
+
+00:02:08.667 --> 00:02:23.412
+Fork hat keine Plugin-API, also ist die Integration ein eigener Befehl: Das Kontextmenü des Repositories startet die App in einem Terminal, bereits an das ausgewählte Repository gebunden. Null Änderungen an Fork selbst.
+
+00:02:25.212 --> 00:02:39.041
+Sechs Tests decken Parsing und echte Repositories ab, einschließlich Umbenennungen und Merge-Konflikten. Vier testen den reinen Filter. Zwei steuern den echten Widget-Baum. Zwölf Tests, und git selbst wird nie gemockt.
+
+00:02:40.841 --> 00:03:02.814
+Jede Wahl kostet etwas. Eine eigenständige App erscheint heute, lebt aber neben Fork. Das Auslagern an git hält git maßgeblich, startet aber einen Prozess. Polling ist einfach, aber zwei Sekunden veraltet. Und ein Teilstring-Filter ist vorhersehbar, aber nicht unscharf. Die Doku hält jede Entscheidung und ihre Alternative fest.
+
+00:03:04.614 --> 00:03:23.810
+Das Ergebnis: zwei unabhängige Filter, dreihundertdreiundachtzig Zeilen Anwendungscode, zwölf grüne Tests und null Änderungen an Fork. Dieses Video praktiziert auch, was es predigt — siebenunddreißig Untertitelsprachen und zwanzig Erzählspuren, erzeugt vom selben Repository.
+
+00:03:25.610 --> 00:03:33.897
+Der Code, die Architekturhinweise und das Trade-off-Log sind alle öffentlich, unter der MIT-Lizenz. Link in der Beschreibung.

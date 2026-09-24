@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:09,807
+Every git client has one search box shared by the staged and unstaged lists. You filter, you stage, you switch panes, and you type the same query again. So I built the missing piece.
+
+2
+00:00:11,607 --> 00:00:21,728
+Staged and unstaged side by side, each pane with its own search field. The two lists answer two different questions, and now they keep two different answers. Type in one pane and the other is untouched.
+
+3
+00:00:23,528 --> 00:00:34,950
+The design is one-way. Git's machine output feeds a parser; the parser feeds a typed snapshot; one pure filter per pane feeds the terminal UI. Nothing imports backwards, so each module can be tested alone.
+
+4
+00:00:36,750 --> 00:00:48,587
+The tool reads git status porcelain version two, NUL-delimited. Renames carry their original path, conflicts have their own record, untracked files are explicit, and a filename with a space or a newline cannot break the framing.
+
+5
+00:00:50,387 --> 00:01:01,733
+Filtering is one function: entries and a query go in, matching entries come out. No widgets, no git calls. Both panes call the same code, so they cannot drift, and the filter is testable without a terminal.
+
+6
+00:01:03,533 --> 00:01:17,756
+Refreshes fire on a timer, on every keystroke, and on demand, so they can overlap. One lock makes each refresh atomic: a single snapshot repopulates both panes, and the selection survives. The race was real; the fix was one line.
+
+7
+00:01:19,556 --> 00:01:30,632
+Stage and unstage from the pane you are looking at, open the file in your editor, reveal it in Finder, copy its absolute path, or force a refresh. The keyboard never has to leave the lists to get work done.
+
+8
+00:01:32,432 --> 00:01:43,792
+Fork has no plugin API, so the integration is a custom command: the repository context menu launches the app in a terminal, already bound to the selected repository. Zero modifications to Fork itself.
+
+9
+00:01:45,592 --> 00:01:56,188
+Six tests cover parsing and real repositories, including renames and merge conflicts. Four test the pure filter. Two drive the real widget tree. Twelve tests, and git itself is never mocked.
+
+10
+00:01:57,988 --> 00:02:13,024
+Every choice costs something. A standalone app ships today but lives beside Fork. Shelling out to git keeps git authoritative but spawns a process. Polling is simple but two seconds stale. And a substring filter is predictable but not fuzzy. The docs record each decision and its alternative.
+
+11
+00:02:14,824 --> 00:02:28,753
+The result: two independent filters, three hundred eighty-three lines of application code, twelve tests green, and zero changes to Fork. This video practices what it preaches too — thirty-seven subtitle languages and twenty narration tracks, produced by the same repository.
+
+12
+00:02:30,553 --> 00:02:37,452
+The code, the architecture notes, and the trade-off log are all public, under the MIT license. Link in the description.
